@@ -1,6 +1,5 @@
 import { Router } from "express"
-import userModel from "../models/user.js"
-
+import User from "../models/user.js"
 
 const router = Router()
 
@@ -9,13 +8,19 @@ router.get("/register",async (req, res) => {
 })
 
 router.post("/register",async (req, res) => {
-    const User = new userModel({
+    const user = new User({
         fname: req.body.fname,
         username: req.body.username,
         password: req.body.password
     })
-    await User.save()
-    res.redirect("/secrets")
+    try{
+        await user.save()
+        res.redirect("/secrets")
+    }catch(err)
+    {
+        console.log(err.message)
+        res.redirect("/register")
+    }
 })
 
 export default router
