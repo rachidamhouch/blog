@@ -2,23 +2,23 @@ import { Router } from "express"
 
 const router = Router()
 
-router.get("*", (req, res) => {
+router.get("*",async (req, res) => {
     res.render("404.ejs")
 })
 
-router.post("*", (req, res) => {
+router.post("*",async (req, res) => {
     res.render("404.ejs")
 })
 
-router.put("*", (req, res) => {
+router.put("*",async (req, res) => {
     res.render("404.ejs")
 })
 
-router.patch("*", (req, res) => {
+router.patch("*",async (req, res) => {
     res.render("404.ejs")
 })
 
-router.delete("*", (req, res) => {
+router.delete("*",async (req, res) => {
     res.render("404.ejs")
 })
 

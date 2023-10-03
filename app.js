@@ -1,5 +1,6 @@
 import express from "express"
 import bodyParser from "body-parser"
+import mongoose from "mongoose"
 import homeRouter from "./routes/home.js"
 import errorRouter from "./routes/404.js"
 import loginRouter from "./routes/login.js"
@@ -9,6 +10,7 @@ import secretsRouter from "./routes/secrets.js"
 const app = express()
 const port = 3000
 
+await mongoose.connect("mongodb://localhost/blog")
 app.use(express.static("public"))
 app.use(bodyParser.urlencoded({extended: true}))
 app.use("/", homeRouter)

@@ -2,7 +2,7 @@ import { Router } from "express"
 
 const router = Router()
 
-router.get("/secrets", (req, res) => {
+router.get("/secrets",async (req, res) => {
     res.render("secrets.ejs")
 })
 
