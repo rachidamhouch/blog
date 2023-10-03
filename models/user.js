@@ -2,8 +2,8 @@ import mongoose from "mongoose"
 import encrypt from "mongoose-encryption"
 import {config} from "dotenv"
 
-
 config()
+console.log(process.env.PATH)
 const schema = new mongoose.Schema({
     fname: {
         type: String,
