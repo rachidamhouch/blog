@@ -1,5 +1,9 @@
 import mongoose from "mongoose"
 import encrypt from "mongoose-encryption"
+import passportLocalMongoose from "passport-local-mongoose"
+import {config} from "dotenv"
+
+config()
 const schema = new mongoose.Schema({
     fname: {
         type: String,
@@ -14,8 +18,8 @@ const schema = new mongoose.Schema({
     },
     password: {
         type: String,
-        required: true,
     },
 })
-schema.plugin(encrypt, {secret: process.env.SECRET, excludeFromEncryption: ['password']});
+schema.plugin(encrypt, {secret: process.env.SECRET, excludeFromEncryption: ['password', 'salt', 'hash']});
+schema.plugin(passportLocalMongoose);
 export default new mongoose.model("user", schema)
