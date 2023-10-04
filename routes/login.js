@@ -31,6 +31,14 @@ router.post('/login', (req, res, next) => {
     })(req, res, next);
 });
 
+router.get('/auth/google', passport.authenticate('google', { scope: ['profile'] }));
+
+router.get('/auth/google/secrets', 
+  passport.authenticate('google', { failureRedirect: '/login' }),
+  function(req, res) {
+    res.redirect('/secrets');
+});
+
 router.get('/logout', (req, res) => {
     if (!req.isAuthenticated())
         return res.redirect("/login")

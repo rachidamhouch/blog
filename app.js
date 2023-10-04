@@ -4,6 +4,8 @@ import mongoose from "mongoose"
 import session from "express-session"
 import passport from 'passport';
 import { Strategy as LocalStrategy } from 'passport-local';
+import { Strategy as GoogleStrategy } from 'passport-google-oauth20';
+import findOrCreate from "mongoose-findorcreate"
 import homeRouter from "./routes/home.js"
 import errorRouter from "./routes/404.js"
 import loginRouter from "./routes/login.js"
@@ -29,10 +31,30 @@ app.use(session({
 app.use(passport.initialize())
 app.use(passport.session())
 
-passport.serializeUser(User.serializeUser())
-passport.deserializeUser(User.deserializeUser())
+passport.serializeUser(function(user, cb) {
+    process.nextTick(function() {
+      cb(null, { id: user.id, username: user.username, fname: user.fname });
+    });
+});
+  
+passport.deserializeUser(function(user, cb) {
+    process.nextTick(function() {
+        return cb(null, user);
+    });
+});
 
 passport.use(new LocalStrategy(User.authenticate()))
+passport.use(new GoogleStrategy({
+    clientID: process.env.GOOGLE_CLIENT_ID,
+    clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+    callbackURL: process.env.GOOGLE_URL
+  },
+  function(accessToken, refreshToken, profile, cb) {
+    User.findOrCreate({ googleId: profile.id, fname: profile.displayName}, function (err, user) {
+      return cb(err, user);
+    });
+  }
+));
 
 app.use(express.static("public"))
 app.use(bodyParser.urlencoded({extended: true}))
