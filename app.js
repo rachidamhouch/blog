@@ -20,18 +20,19 @@ const port = 3000
 
 await mongoose.connect(process.env.DB)
 
-passport.use(new LocalStrategy(User.authenticate()));
-passport.serializeUser(User.serializeUser());
-passport.deserializeUser(User.deserializeUser());
-
 app.use(session({
     secret: process.env.SECRET,
     resave: false,
     saveUninitialized: false,
 }));
-  
-app.use(passport.initialize());
-app.use(passport.session());
+
+app.use(passport.initialize())
+app.use(passport.session())
+
+passport.serializeUser(User.serializeUser())
+passport.deserializeUser(User.deserializeUser())
+
+passport.use(new LocalStrategy(User.authenticate()))
 
 app.use(express.static("public"))
 app.use(bodyParser.urlencoded({extended: true}))
