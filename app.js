@@ -9,6 +9,7 @@ import errorRouter from "./routes/404.js"
 import loginRouter from "./routes/login.js"
 import registerRouter from "./routes/register.js"
 import secretsRouter from "./routes/secrets.js"
+import submitRouter from "./routes/submit.js"
 import User from "./models/user.js"
 import {config} from "dotenv"
 
@@ -17,7 +18,7 @@ config()
 const app = express()
 const port = 3000
 
-await mongoose.connect("mongodb://localhost/blog")
+await mongoose.connect(process.env.DB)
 
 passport.use(new LocalStrategy(User.authenticate()));
 passport.serializeUser(User.serializeUser());
@@ -39,6 +40,7 @@ app.use("/", homeRouter)
 app.use("/", loginRouter)
 app.use("/", registerRouter)
 app.use("/", secretsRouter)
+app.use("/", submitRouter)
 
 
 app.use("/", errorRouter)

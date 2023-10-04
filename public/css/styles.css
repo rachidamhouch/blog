@@ -14,3 +14,9 @@ body {
   color: #fff;
   background-color: #000;
 }
+
+.error{
+  color: red;
+  font-weight: bold;
+  margin-top: 15px;
+}

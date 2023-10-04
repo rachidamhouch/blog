@@ -6,16 +6,19 @@ const router = Router()
 const saltRounds = 10;
 
 router.get("/register",async (req, res) => {
+    if (req.isAuthenticated())
+        return res.redirect("/secrets")
     res.render("register.ejs")
 })
 
 router.post("/register",async (req, res) => {
-    const {fname, username} = req.body;
+    if (req.isAuthenticated())
+        return res.redirect("/secrets")
     try{
+        const {fname, username} = req.body;
         User.register(new User({fname, username}), req.body.password, (err, user) => {
             if (err) {
-                console.error(err);
-                res.redirect('/register')
+                res.render('register.ejs', {err: err.message})
             }
                 passport.authenticate('local')(req, res, () => {
                     res.redirect('/secrets');
@@ -23,8 +26,7 @@ router.post("/register",async (req, res) => {
         });
     }catch(err)
     {
-        console.log(err.message)
-        res.redirect("/register")
+        res.render("register.ejs", {err: err.message})
     }
  });
 

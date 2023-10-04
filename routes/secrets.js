@@ -1,13 +1,12 @@
 import { Router } from "express"
-import User from "../models/user.js"
+import Secret from "../models/secret.js"
 
 
 const router = Router()
 
 router.get("/secrets",async (req, res) => {
-    const user = await User.find()
     if (req.isAuthenticated())
-        res.render("secrets.ejs")
+        res.render("secrets.ejs", {fname: req.user.fname, secrets: await Secret.find()})
     else
         res.redirect("/login")
 })

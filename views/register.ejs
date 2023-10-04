@@ -20,6 +20,9 @@
             <div class="form-group">
               <label for="password">Password</label>
               <input type="password" class="form-control" name="password">
+              <%if (locals.err){%>
+                <p class="error"><%= err %> </p>
+              <% } %> 
             </div>
             <button type="submit" class="btn btn-dark">Register</button>
           </form>
@@ -28,7 +31,7 @@
       </div>
     </div>
 
-    <!-- <div class="col-sm-4">
+    <div class="col-sm-4">
       <div class="card social-block">
         <div class="card-body">
           <a class="btn btn-block" href="/auth/google" role="button">
@@ -37,7 +40,7 @@
           </a>
         </div>
       </div>
-    </div> -->
+    </div> 
 
   </div>
 </div>
