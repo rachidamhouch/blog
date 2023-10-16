@@ -65,7 +65,6 @@ app.use("/", registerRouter)
 app.use("/", secretsRouter)
 app.use("/", submitRouter)
 
-
 app.use("/", errorRouter)
 app.listen(port, () => {
     console.log(`Server runing in ${port}`)
